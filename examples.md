@@ -39,7 +39,7 @@
 
 - SHA1/SHA256/SHA3/RIPEMD160：`data = abc`
 - HMAC-SHA1/HMAC-SHA256：`data = abc`，`key = secret`
-- PBKDF2：`password = password`，`salt = salt`，`iterations = 10000`，`dklen = 32`
+- PBKDF2：`password = password`，`salt = salt`，`iterations = 1000`，`dklen = 32`
 - Base64 encode：`data = hello`
 - Base64 decode：`data = aGVsbG8=`
 - UTF-8 encode：`data = 密码`

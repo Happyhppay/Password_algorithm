@@ -92,7 +92,7 @@ const algorithms = {
     kind: "口令派生",
     hint: "password + salt + iterations",
     operations: ["derive"],
-    defaults: { operation: "derive", password: "password", salt: "salt", iterations: 10000, dklen: 32, hash: "sha256" }
+    defaults: { operation: "derive", password: "password", salt: "salt", iterations: 1000, dklen: 32, hash: "sha256" }
   },
   Base64: {
     label: "Base64",

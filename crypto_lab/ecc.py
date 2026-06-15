@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-import hashlib
 import secrets
 from dataclasses import dataclass
 
+from .hash_codecs import digest
 from .utils import modinv
 
 # SEC 2 secp160r1 parameters.
@@ -99,8 +99,8 @@ def _bits2int(digest: bytes) -> int:
 
 
 def sign(message: bytes, private_key: ECCPrivateKey, hash_name: str = "sha1") -> tuple[int, int]:
-    digest = hashlib.new(hash_name, message).digest()
-    z = _bits2int(digest)
+    digest_value = digest(message, hash_name)
+    z = _bits2int(digest_value)
     while True:
         k = secrets.randbelow(N - 1) + 1
         p = scalar_mult(k, G)
@@ -116,8 +116,8 @@ def verify(message: bytes, signature: tuple[int, int], public_key: ECCPublicKey,
     r, s = signature
     if not (1 <= r < N and 1 <= s < N) or not is_on_curve(public_key.q):
         return False
-    digest = hashlib.new(hash_name, message).digest()
-    z = _bits2int(digest)
+    digest_value = digest(message, hash_name)
+    z = _bits2int(digest_value)
     w = modinv(s, N)
     u1 = (z * w) % N
     u2 = (r * w) % N

@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import base64
 import secrets
 from typing import Any
 
@@ -37,11 +36,36 @@ def hex_to_bytes(value: str) -> bytes:
 
 
 def bytes_to_b64(data: bytes) -> str:
-    return base64.b64encode(data).decode("ascii")
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+    out = []
+    for i in range(0, len(data), 3):
+        block = data[i : i + 3]
+        value = int.from_bytes(block.ljust(3, b"\x00"), "big")
+        out.append(alphabet[(value >> 18) & 0x3F])
+        out.append(alphabet[(value >> 12) & 0x3F])
+        out.append(alphabet[(value >> 6) & 0x3F] if len(block) > 1 else "=")
+        out.append(alphabet[value & 0x3F] if len(block) > 2 else "=")
+    return "".join(out)
 
 
 def b64_to_bytes(value: str) -> bytes:
-    return base64.b64decode(value.encode("ascii"))
+    alphabet = {ch: i for i, ch in enumerate("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/")}
+    clean = "".join(ch for ch in value if not ch.isspace())
+    if len(clean) % 4:
+        raise ValueError("invalid Base64 length")
+    out = bytearray()
+    for i in range(0, len(clean), 4):
+        quad = clean[i : i + 4]
+        pad = quad.count("=")
+        n = 0
+        for ch in quad:
+            n <<= 6
+            if ch != "=":
+                if ch not in alphabet:
+                    raise ValueError("invalid Base64 character")
+                n |= alphabet[ch]
+        out.extend(n.to_bytes(3, "big")[: 3 - pad])
+    return bytes(out)
 
 
 def pkcs7_pad(data: bytes, block_size: int) -> bytes:

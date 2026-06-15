@@ -56,6 +56,36 @@ def main() -> None:
         == "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
         "SHA256",
     )
+    check(
+        call_algorithm("SHA3", "digest", {"data": "abc"})["result"]
+        == "3a985da74fe225b2045c172d6bd390bd855f086e3e9d525b46bfe24511431532",
+        "SHA3-256",
+    )
+    check(
+        call_algorithm("RIPEMD160", "digest", {"data": "abc"})["result"]
+        == "8eb208f7e05d987a9b044a8e98c6b087f15a0bfc",
+        "RIPEMD160",
+    )
+    check(
+        call_algorithm("HmacSHA1", "digest", {"data": "The quick brown fox jumps over the lazy dog", "key": "key"})["result"]
+        == "de7c9b85b8b78aa6bc8a7a36f70a90701c9db4d9",
+        "HMAC-SHA1",
+    )
+    check(
+        call_algorithm("HmacSHA256", "digest", {"data": "The quick brown fox jumps over the lazy dog", "key": "key"})["result"]
+        == "f7bc83f430538424b13298e6aa6fb143ef4d59a14946175997479dbc2d1a3cd8",
+        "HMAC-SHA256",
+    )
+    check(
+        call_algorithm("PBKDF2", "derive", {"password": "password", "salt": "salt", "iterations": 1, "dklen": 20, "hash": "sha1"})["result"]
+        == "0c60c80f961f0e71f3a9b524af6012062fe037a6",
+        "PBKDF2-SHA1",
+    )
+    check(
+        call_algorithm("PBKDF2", "derive", {"password": "password", "salt": "salt", "iterations": 1, "dklen": 32, "hash": "sha256"})["result"]
+        == "120fb6cffcf8b32c43e7225256c4f837a86548c92ccc35480805987cb70be17b",
+        "PBKDF2-SHA256",
+    )
     check(call_algorithm("Base64", "encode", {"data": "hello"})["result"] == "aGVsbG8=", "Base64 encode")
     check(call_algorithm("UTF-8", "encode", {"data": "密码"})["result"] == "e5af86e7a081", "UTF-8 encode")
 

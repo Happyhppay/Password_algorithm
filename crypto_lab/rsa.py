@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-import hashlib
 import secrets
 from dataclasses import dataclass
 
+from .hash_codecs import sha1
 from .utils import bytes_to_int, generate_prime, int_to_bytes, modinv, sha1_digest_info
 
 
@@ -81,7 +81,7 @@ def decrypt(ciphertext: bytes, private_key: RSAPrivateKey) -> bytes:
 
 def sign_sha1(message: bytes, private_key: RSAPrivateKey) -> bytes:
     k = _key_len(private_key.n)
-    digest_info = sha1_digest_info(hashlib.sha1(message).digest())
+    digest_info = sha1_digest_info(sha1(message))
     if len(digest_info) > k - 11:
         raise ValueError("digest info too long")
     padding = b"\xff" * (k - len(digest_info) - 3)
@@ -95,7 +95,7 @@ def verify_sha1(message: bytes, signature: bytes, public_key: RSAPublicKey) -> b
     if len(signature) != k:
         return False
     recovered = int_to_bytes(pow(bytes_to_int(signature), public_key.e, public_key.n), k)
-    digest_info = sha1_digest_info(hashlib.sha1(message).digest())
+    digest_info = sha1_digest_info(sha1(message))
     expected = b"\x00\x01" + b"\xff" * (k - len(digest_info) - 3) + b"\x00" + digest_info
     return recovered == expected
 
