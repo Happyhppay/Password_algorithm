@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>密码算法实验平台</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">网络信息安全课程作业</p>
+          <h1>密码算法实验平台</h1>
+        </div>
+        <div class="status-pill" id="serverStatus">接口就绪</div>
+      </header>
+
+      <section class="workspace">
+        <aside class="panel control-panel">
+          <div class="field-group">
+            <label for="algorithm">算法</label>
+            <select id="algorithm"></select>
+          </div>
+
+          <div class="field-group">
+            <label for="operation">操作</label>
+            <select id="operation"></select>
+          </div>
+
+          <div class="quick-row">
+            <button type="button" id="sampleBtn">载入示例</button>
+            <button type="button" id="runBtn" class="primary">执行</button>
+          </div>
+
+          <div class="summary-list" id="algorithmSummary"></div>
+        </aside>
+
+        <section class="panel form-panel">
+          <div class="section-head">
+            <h2>输入参数</h2>
+            <span id="operationHint"></span>
+          </div>
+
+          <form id="cryptoForm">
+            <div id="dynamicFields" class="dynamic-fields"></div>
+          </form>
+        </section>
+
+        <section class="panel output-panel">
+          <div class="section-head">
+            <h2>执行结果</h2>
+            <button type="button" id="copyBtn">复制 JSON</button>
+          </div>
+          <div class="result-meta">
+            <span id="statusCode">status: -</span>
+            <span id="elapsedTime">耗时: -</span>
+          </div>
+          <pre id="resultBox">请选择算法并点击执行。</pre>
+        </section>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

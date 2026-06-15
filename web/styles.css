@@ -1,0 +1,297 @@
+:root {
+  color-scheme: light;
+  --bg: #f5f7fa;
+  --panel: #ffffff;
+  --ink: #18212f;
+  --muted: #627084;
+  --line: #d9e0ea;
+  --accent: #1967d2;
+  --accent-strong: #0f4fb2;
+  --ok: #12805c;
+  --bad: #b42318;
+  --code-bg: #101828;
+  --code-ink: #e6edf7;
+  font-family: "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(25, 103, 210, 0.08), rgba(25, 103, 210, 0) 260px),
+    var(--bg);
+  color: var(--ink);
+}
+
+button,
+select,
+input,
+textarea {
+  font: inherit;
+}
+
+button,
+select {
+  cursor: pointer;
+}
+
+.app-shell {
+  width: min(1440px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 24px 0 32px;
+}
+
+.topbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 98px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+h1,
+h2 {
+  margin: 0;
+  letter-spacing: 0;
+}
+
+h1 {
+  font-size: 34px;
+  line-height: 1.15;
+}
+
+h2 {
+  font-size: 18px;
+}
+
+.status-pill {
+  min-width: 92px;
+  border: 1px solid rgba(18, 128, 92, 0.25);
+  border-radius: 999px;
+  padding: 8px 14px;
+  color: var(--ok);
+  background: rgba(18, 128, 92, 0.08);
+  font-size: 14px;
+  text-align: center;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: 280px minmax(360px, 1fr) minmax(360px, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.panel {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  box-shadow: 0 14px 30px rgba(24, 33, 47, 0.06);
+}
+
+.control-panel,
+.form-panel,
+.output-panel {
+  padding: 18px;
+}
+
+.field-group {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 14px;
+}
+
+label {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+select,
+input,
+textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 10px 11px;
+  background: #fff;
+  color: var(--ink);
+  outline: none;
+}
+
+textarea {
+  min-height: 108px;
+  resize: vertical;
+  line-height: 1.45;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(25, 103, 210, 0.13);
+}
+
+.quick-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+button {
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 9px 13px;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+button:hover {
+  border-color: #aab6c7;
+}
+
+button.primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+button.primary:hover {
+  background: var(--accent-strong);
+}
+
+.summary-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  border-top: 1px solid var(--line);
+  padding-top: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.summary-item strong {
+  color: var(--ink);
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.section-head span {
+  color: var(--muted);
+  font-size: 13px;
+  text-align: right;
+}
+
+.dynamic-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.field-wide {
+  grid-column: 1 / -1;
+}
+
+.help-text {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.result-meta {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.result-meta .ok {
+  color: var(--ok);
+}
+
+.result-meta .bad {
+  color: var(--bad);
+}
+
+pre {
+  min-height: 520px;
+  max-height: 70vh;
+  overflow: auto;
+  margin: 0;
+  border-radius: 8px;
+  padding: 16px;
+  background: var(--code-bg);
+  color: var(--code-ink);
+  font: 13px/1.55 Consolas, "SFMono-Regular", Menlo, monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+@media (max-width: 1100px) {
+  .workspace {
+    grid-template-columns: 260px 1fr;
+  }
+
+  .output-panel {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 760px) {
+  .app-shell {
+    width: min(100% - 24px, 720px);
+    padding-top: 16px;
+  }
+
+  .topbar {
+    align-items: flex-start;
+    flex-direction: column;
+    min-height: auto;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  .workspace,
+  .dynamic-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .output-panel {
+    grid-column: auto;
+  }
+
+  pre {
+    min-height: 360px;
+  }
+}
